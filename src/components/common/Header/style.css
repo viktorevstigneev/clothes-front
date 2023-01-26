@@ -1,0 +1,114 @@
+.header {
+	background: rgba(0, 0, 0, 0.644);
+	padding: 5px;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	z-index: 1000;
+}
+
+.header__container {
+	width: 90%;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-between;
+}
+
+.header__logo {
+	/* width: 35px; */
+	height: 50px;
+}
+.header__nav {
+	display: flex;
+	justify-content: space-around;
+}
+
+.header__nav-left {
+	display: flex;
+}
+.header__nav-right {
+	display: flex;
+}
+
+.header__link {
+	color: white;
+	display: block;
+	border-radius: 100px;
+	margin-left: 10px;
+	text-decoration: none;
+}
+
+.header__icon {
+	width: 35px;
+	height: 35px;
+}
+
+.header__select {
+	background: transparent;
+	color: white;
+	border: none;
+}
+
+.header__option {
+	color: black;
+	background: #cccccccc;
+	outline: none;
+}
+
+/* ------------------------ */
+.auth__image {
+	display: block;
+	margin: 0 auto;
+}
+.auth__wrapper {
+	display: flex;
+	margin-top: 30px;
+}
+
+.auth__preinput {
+	color: rgb(255, 255, 255);
+	background: black;
+	border: 1px solid black;
+	border-top-left-radius: 25px;
+	border-bottom-left-radius: 25px;
+	padding: 5px 30px;
+	font-family: Pompiere;
+	font-size: 30px;
+}
+.auth__input {
+
+	width: 100%;
+	padding: 5px;
+	display: block;
+	border: 1px solid black;
+	border-top-right-radius: 25px;
+	border-bottom-right-radius: 25px;
+}
+
+.auth__input::placeholder {
+	font-family: Pompiere;
+	font-size: 30px;
+}
+
+.auth__button{
+	padding: 10px 20px;
+		font-family: Pompiere;
+	font-size: 30px;
+	background: rgba(0, 0, 0, 0.767);
+	border: none;
+	border-radius: 25px;
+	display: block;
+	margin: 0 auto;
+	color: white;
+	margin-top: 30px;
+	
+	cursor: pointer;
+}
+
+
+.auth__next{
+	font-family: Pompiere;
+	font-size: 30px;
+
+	cursor: pointer;
+}
