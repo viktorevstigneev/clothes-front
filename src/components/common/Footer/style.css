@@ -2,8 +2,8 @@
 	background: #141414;
 	color: #fff;
 	padding: 5px;
-	position: fixed;
-	bottom:  0;
+	/* position: fixed;
+	bottom:  0; */
     width: 100%;
 	z-index: 1000;
 }
@@ -40,4 +40,28 @@
 	text-align: center;
 }
 
+@media (max-width: 450px) {
 
+	.footer__container {
+		align-items: baseline;
+		font-size: 11px;
+	}
+	.footer__wrapper-left{
+	text-align: center;
+	width: 40%;
+}
+
+.footer__wrapper-middle{
+	text-align: center;
+	width: 30%;
+}
+
+.footer__wrapper-right{
+	text-align: center;
+	width: 30%;
+}
+
+.footer__title{
+	font-size: 14px;
+}
+}
