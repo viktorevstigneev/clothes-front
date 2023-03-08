@@ -1,0 +1,53 @@
+/* editor */
+
+.editor__block {
+	position: relative;
+	/* border: 3px dashed rgb(61, 61, 61); */
+	border-radius: 10px;
+	position: relative;
+	margin-top: 40px;
+
+	height: 200px;
+}
+.editor__avatar {
+	width: 100%;
+}
+
+.editor__label {
+	display: block;
+	height: 150px;
+	width: 100%;
+}
+
+.banner__container {
+	width: 100%;
+	height: 300px;
+	overflow-y: scroll;
+}
+
+
+.editor__input {
+	/* width: 100%; */
+	/* height: 20%; */
+	color: transparent;
+	position: absolute;
+	top: 20%;
+	left: 40%;
+	height: 200px;
+}
+
+.editor__input::-webkit-file-upload-button {
+	visibility: hidden;
+}
+.editor__input::before {
+	content: 'Browse...';
+	color: rgb(226, 226, 226);
+	display: inline-block;
+	background: rgb(51, 51, 51);
+	border: 1px solid #999;
+	border-radius: 100px;
+	padding: 10px 60px;
+	cursor: pointer;
+	font-weight: 700;
+	font-size: 10pt;
+}

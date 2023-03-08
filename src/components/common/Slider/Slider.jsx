@@ -1,9 +1,26 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import Slider from 'react-slick';
-import { API_URL } from '../../../constants';
+import { API_URL, POPUP_OVERLAY_CLASSNAME } from '../../../constants';
+import Modal from '../Modal';
+import Banner from './Banner';
 import './style.css';
 
-const ImageSlider = ({ data}) => {
+import ban1 from '../../../img/ban_1.png';
+import ban2 from '../../../img/ban_2.png';
+
+const bannerData = [
+	{
+		image: ban1,
+	},
+	{
+		image: ban2,
+	},
+];
+
+const ImageSlider = ({ data }) => {
+	const [isPopupEditOpen, setPopupEditOpen] = useState(false);
+
 	const settings = {
 		dots: false,
 		infinite: true,
@@ -12,10 +29,29 @@ const ImageSlider = ({ data}) => {
 		slidesToScroll: 1,
 	};
 
-	
+	const handleModalWindowCloseButtonClick = useCallback((evt) => {
+		evt.preventDefault();
+		setPopupEditOpen(false);
+	}, []);
+
+	const handleModalWindowOverlayClick = useCallback((evt) => {
+		if (evt.target.classList.contains(POPUP_OVERLAY_CLASSNAME)) {
+			setPopupEditOpen(false);
+		}
+	}, []);
+
+	console.log('bannerData: ', bannerData);
 
 	return (
 		<div className="slider">
+			<p
+				className="slider__edit-btn"
+				onClick={() => {
+					setPopupEditOpen(true);
+				}}
+			>
+				<FormattedMessage id="edit_slider_btn" />
+			</p>
 			<Slider {...settings}>
 				{data &&
 					data.map((item, index) => (
@@ -24,6 +60,21 @@ const ImageSlider = ({ data}) => {
 						</div>
 					))}
 			</Slider>
+
+			{isPopupEditOpen && (
+				<Modal
+					title={<FormattedMessage id="edit_slider_title" />}
+					onCloseButtonClick={handleModalWindowCloseButtonClick}
+					onOverlayClick={handleModalWindowOverlayClick}
+				>
+					<div className="banner__container">
+						{bannerData.map((item) => (
+							<Banner image={item.image} />
+						))}
+						<Banner isDashed={true}/>
+					</div>
+				</Modal>
+			)}
 		</div>
 	);
 };

@@ -98,6 +98,13 @@
 	height: 350px;
 }
 
+.slider__edit-btn{
+	color: #ffffff;
+	cursor: pointer;
+	font-family: Pompiere;
+	font-size: 25px;
+}
+
 @media (max-width: 450px) {
 	.slider__image {
 		width: 100%;

@@ -4,7 +4,7 @@ import React from 'react';
 import './style.css';
 
 const Modal = (props) => (
-	<div className="modal__window" onClick={props.onOverlayClick}>
+	<div className="modal__window" onClick={props.onOverlayClick} style={props.style}>
 		<div className="modal__container">
 			<button className="modal__close-button" onClick={props.onCloseButtonClick}>
 				&times;

@@ -1,6 +1,6 @@
 .admin {
-	background: linear-gradient(rgba(27, 27, 27, 0.164), rgba(0, 0, 0, 0.596)),
-		url('../../../img/header_bg.png') 50% no-repeat;
+	/* background: linear-gradient(rgba(27, 27, 27, 0.164), rgba(0, 0, 0, 0.596)),
+		url('../../../img/header_bg.png') 50% no-repeat; */
 	background-size: cover;
 	/* height: 800px; */
 	border-top: 1px solid #000;
@@ -120,12 +120,11 @@
 }
 
 .admin__button {
-	background: #d1a379;
+	background: #222222;
 	padding: 15px 50px;
 	color: #fff;
 	font-size: 18px;
 	border: none;
-	box-shadow: 4px 8px 0px 0px rgba(122, 122, 122, 0.473);
 	cursor: pointer;
 }
 
@@ -146,11 +145,11 @@
 }
 
 .admin__button:hover {
-	background: rgba(255, 138, 60, 0.877);
+	background: rgba(66, 66, 66, 0.877);
 }
 
 .option__item {
-	color: white;
+	color: rgb(0, 0, 0);
 	cursor: pointer;
 }
 

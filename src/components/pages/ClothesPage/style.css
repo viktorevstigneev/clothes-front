@@ -1,0 +1,104 @@
+.clothes__container {
+	width: 90%;
+	margin: 0 auto;
+	margin-top: 70px;
+}
+
+.Clothes__top {
+	width: 100%;
+	display: flex;
+	background: rgb(43, 42, 42);
+	padding: 10px;
+}
+.clothes__title {
+	color: aliceblue;
+	margin-left: 40%;
+}
+
+.clothes__content {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	column-gap: 15px;
+	row-gap: 15px;
+}
+
+.clothes__img {
+	width: 100%;
+	height: 200px;
+	display: block;
+}
+
+.clothes__card {
+	/* width: 200px; */
+	cursor: pointer;
+	background: rgb(53, 53, 53);
+}
+
+.clothes__bottom {
+	background: rgb(53, 53, 53);
+	margin: 0;
+	padding: 10px;
+	border-bottom-left-radius: 20px;
+	border-bottom-right-radius: 20px;
+}
+
+.clothes__price {
+	color: white;
+}
+#my-slider {
+	color: rgb(0, 255, 242);
+}
+.filter__block {
+	/* width: 90%;
+	margin: 0 auto; */
+}
+.clothes__filter {
+	color: white;
+	cursor: pointer;
+}
+
+.filter__price {
+	display: flex;
+	justify-content: space-between;
+}
+
+.filter__title {
+	font-family: Pompiere;
+	margin-bottom: 0;
+}
+
+.filter__wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	width: 50%;
+	margin-top: 15px;
+	margin-left: 15px;
+}
+
+.filter__checkbox {
+	display: block;
+}
+
+.filter__item {
+	display: flex;
+	width: 100px;
+}
+
+.filter__apply {
+	background: rgba(0, 0, 0, 0.8);
+	color: white;
+	border: none;
+
+	border-radius: 100px;
+	padding: 10px 60px;
+	width: 50%;
+	display: block;
+	margin: 50px auto;
+	font-family: Pompiere;
+	font-size: 18px;
+	cursor: pointer;
+}
+
+.filter__apply:hover{
+	background: rgb(107, 107, 107);
+}

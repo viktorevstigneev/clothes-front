@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import axios from 'axios';
 
@@ -21,7 +22,10 @@ import { LOCALES } from '../../i18n/locales';
 import { messages } from '../../i18n/messages';
 
 const Header = ({ handleChange, currentLocale }) => {
+
+	const navigate = useNavigate();
 	const [user, setUser] = useState();
+	console.log('user: ', user);
 	const [isPopupRegistrOpen, setPopupRegistrOpen] = useState(false);
 	const [isPopupAuthOpen, setPopupAuthOpen] = useState(false);
 
@@ -32,6 +36,10 @@ const Header = ({ handleChange, currentLocale }) => {
 				.then((response) => setUser(response.data));
 		};
 		getCurrentUser();
+		setUser({
+			name: "fgkdgf",
+			isAdmin:true
+		})
 	}, []);
 
 	const languages = [
@@ -61,10 +69,10 @@ const Header = ({ handleChange, currentLocale }) => {
 					<Link className="header__link" to="/">
 						<FormattedMessage id="home_link" />
 					</Link>
-					<Link className="header__link" to="/contact">
+					<Link className="header__link" to="/clothes">
 						<FormattedMessage id="clothes_link" />
 					</Link>
-					<Link className="header__link" to="/main">
+					{/* <Link className="header__link" to="/main">
 						<FormattedMessage id="accessories_link" />
 					</Link>
 					<Link className="header__link" to="/main">
@@ -72,7 +80,7 @@ const Header = ({ handleChange, currentLocale }) => {
 					</Link>
 					<Link className="header__link" to="/main">
 						<FormattedMessage id="shoes_link" />
-					</Link>
+					</Link> */}
 					<div className="header__link">
 						<select className="header__select" onChange={handleChange} value={currentLocale}>
 							{languages.map(({ name, code }) => (
@@ -100,26 +108,32 @@ const Header = ({ handleChange, currentLocale }) => {
 					</Link>
 				</div>
 				<div className="header__nav-right">
-					<a className="header__link" href="#">
+					<a className="header__link" rel="noreferrer" target="_blank" href="https://www.instagram.com/thrn.bonheur">
 						<img src={inst} alt="inst" />
 					</a>
-					<a className="header__link" href="#">
+					<a className="header__link" rel="noreferrer" target="_blank" href="https://t.me/boonheeur">
 						<img src={tg} alt="inst" />
-					</a>
-					<a className="header__link" href="#">
-						<img src={viber} alt="inst" />
 					</a>
 					<a
 						className="header__link"
-						href="#"
+						rel="noreferrer"
+						target="_blank"
+						href="https://invite.viber.com/?g2=AQBaDJFGsoMsZ1Bbz7%2BextJ%2F3JDwt7iiSUBvrGHbsnOv1Y9SXM%2F%2FskksGrVFrOcJ"
+					>
+						<img src={viber} alt="inst" />
+					</a>
+					<div
+						className="header__link"
+						// href={user && Object.keys(user).length !== 0 ? '/profile' : '#'}
 						onClick={() => {
-							setPopupRegistrOpen(true);
+							!user  ? setPopupRegistrOpen(true) : navigate("/profile");
 						}}
 					>
 						<img src={profile} alt="inst" />
-					</a>
+					</div>
 				</div>
 			</div>
+			{/* registration modal */}
 			{isPopupRegistrOpen && (
 				<Modal
 					title={<FormattedMessage id="registr_title" />}
@@ -152,6 +166,8 @@ const Header = ({ handleChange, currentLocale }) => {
 					</p>
 				</Modal>
 			)}
+
+			{/* sign in modal */}
 
 			{isPopupAuthOpen && (
 				<Modal

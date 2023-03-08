@@ -9,17 +9,15 @@ import Header from './components/common/Header';
 // const SignInPage = lazy(() => import('./components/pages/SignIn'));
 // const SignUpPage = lazy(() => import('./components/pages/Signup'));
 const MainPage = lazy(() => import('./components/pages/MainPage'));
-// const AdminPage = lazy(() => import('./components/pages/AdminPanel'));
+const ClothesPage = lazy(() => import('./components/pages/ClothesPage'));
+const ProfilePage = lazy(() => import('./components/pages/ProfilePage'));
+const AdminPage = lazy(() => import('./components/pages/AdminPanel'));
 // const ContactPage = lazy(() => import('./components/pages/ContactPage'));
-
-
-
 
 function App() {
 	const [currentLocale, setCurrentLocale] = useState(getInitialLocal());
 
-
-  const handleChange = (e) => {
+	const handleChange = (e) => {
 		setCurrentLocale(e.target.value);
 		localStorage.setItem('locale', e.target.value);
 	};
@@ -36,7 +34,10 @@ function App() {
 						{/* <Route path="/" element={<SignInPage />} />
 					<Route path="/signup" element={<SignUpPage />} /> */}
 						<Route path="/" element={<MainPage />} />
-						{/* <Route path="/admin" element={<AdminPage />} />
+						<Route path="/clothes" element={<ClothesPage />} />
+						<Route path="/profile" element={<ProfilePage />} />
+						<Route path="/admin" element={<AdminPage />} />
+						{/*
 					<Route path="/contact" element={<ContactPage />} /> */}
 					</Routes>
 					{/* <Navigate  to="/main" /> */}
