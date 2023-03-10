@@ -55,19 +55,23 @@ const ImageSlider = ({ data }) => {
 
 	return (
 		<div className="slider">
-			{user && user.isAdmin ? <p
-				className="slider__edit-btn"
-				onClick={() => {
-					setPopupEditOpen(true);
-				}}
-			>
-				<FormattedMessage id="edit_slider_btn" />
-			</p> : ''}
+			{user && user.isAdmin ? (
+				<p
+					className="slider__edit-btn"
+					onClick={() => {
+						setPopupEditOpen(true);
+					}}
+				>
+					<FormattedMessage id="edit_slider_btn" />
+				</p>
+			) : (
+				''
+			)}
 			<Slider {...settings}>
 				{data &&
 					data.map((item, index) => (
 						<div className="slider_wrapper">
-							<img className="slider__image" key={index} src={item.image} alt="banner" />
+							<img className="slider__image" key={index} src={`${API_URL}/getImage/${item.avatar}`} alt="banner" />
 						</div>
 					))}
 			</Slider>
@@ -79,9 +83,7 @@ const ImageSlider = ({ data }) => {
 					onOverlayClick={handleModalWindowOverlayClick}
 				>
 					<div className="banner__container">
-						{bannerData.map((item) => (
-							<Banner image={item.image} />
-						))}
+						{data && data.map((item) => <Banner image={`${API_URL}/getImage/${item.avatar}`} id={item._id}/>)}
 						<Banner isDashed={true} />
 					</div>
 				</Modal>

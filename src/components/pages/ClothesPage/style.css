@@ -120,11 +120,19 @@
 	margin-left: 5px;
 }
 .open__price,
-.open__cart {
+.open__cart, .open__cart-no {
 	font-family: Pompiere;
 	font-weight: 600;
 
 	font-size: 24px;
+}
+
+.open__cart{
+	cursor: pointer;
+}
+
+.open__cart-no{
+	color: red;
 }
 
 .open__bottom {

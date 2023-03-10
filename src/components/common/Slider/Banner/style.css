@@ -26,8 +26,12 @@
 	overflow-y: scroll;
 }
 
-.editor__drop{
-	text-align: center;
+.editor__drop {
+	position: absolute;
+	left: 40%;
+	top: 10%;
+	color: rgb(204, 149, 29);
+	font-weight: 500;
 }
 
 .editor__input {
@@ -61,4 +65,22 @@
 	left: 35%;
 }
 
+.add__banner {
+	z-index: 10000000000;
+	border: none;
+	background: rgb(31, 31, 31);
+	border-radius: 100px;
+	padding: 10px 20px;
+	cursor: pointer;
+	color: white;
+	position: absolute;
+	left: 45%;
+	top: 60%;
+}
 
+.banner__delete{
+	margin: 0;
+	cursor: pointer;
+	font-size: 30px;
+	color: red;
+}

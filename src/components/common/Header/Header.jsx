@@ -27,6 +27,7 @@ import { signIn } from '../../pages/SignIn/utils';
 const Header = ({ handleChange, currentLocale }) => {
 	const navigate = useNavigate();
 	const [user, setUser] = useState();
+	console.log('user: ', user);
 	const [isPopupRegistrOpen, setPopupRegistrOpen] = useState(false);
 	const [isPopupAuthOpen, setPopupAuthOpen] = useState(false);
 
@@ -62,6 +63,7 @@ const Header = ({ handleChange, currentLocale }) => {
 		const formData = Object.fromEntries(new FormData(evt.target));
 
 		signUp({ formData, setUser });
+		setPopupRegistrOpen(false);
 	});
 
 	const handleFormSubmit = useCallback((evt) => {
@@ -69,6 +71,7 @@ const Header = ({ handleChange, currentLocale }) => {
 		const formData = Object.fromEntries(new FormData(evt.target));
 
 		signIn({ formData, setUser });
+		setPopupAuthOpen(false);
 	});
 
 	return (
@@ -108,15 +111,20 @@ const Header = ({ handleChange, currentLocale }) => {
 						</Link>
 					) : null}
 
-					<Link
-						className="header__link"
-						to="/"
-						onClick={(evt) => {
-							axios.post(`${API_URL}/logout`);
-						}}
-					>
-						<FormattedMessage id="exit_link" />
-					</Link>
+					{user && user ? (
+						<Link
+							className="header__link"
+							to="/"
+							onClick={async (evt) => {
+								const response = await axios.post(`${API_URL}/logout`, {}, { withCredentials: true });
+								if (response.status == 200) {
+									window.location.reload();
+								}
+							}}
+						>
+							<FormattedMessage id="exit_link" />
+						</Link>
+					) : null}
 				</div>
 				<div className="header__nav-right">
 					<a className="header__link" rel="noreferrer" target="_blank" href="https://www.instagram.com/thrn.bonheur">
@@ -193,7 +201,7 @@ const Header = ({ handleChange, currentLocale }) => {
 					onCloseButtonClick={handleModalWindowCloseButtonClick}
 					onOverlayClick={handleModalWindowOverlayClick}
 				>
-					<form className="auth__form" action={API_URL} method="POST" onSubmit={handleFormSubmitRegistr}>
+					<form className="auth__form" action={API_URL} method="POST" onSubmit={handleFormSubmit}>
 						<img className="auth__image" src={authDefault} alt="" />
 
 						<div className="auth__wrapper">

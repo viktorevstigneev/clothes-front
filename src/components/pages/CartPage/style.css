@@ -136,3 +136,10 @@
 .pay__button:hover {
 	background: rgb(24, 24, 24);
 }
+
+
+.empty{
+	color: white;
+	font-size: 30px;
+	text-align: center;
+}

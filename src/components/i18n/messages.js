@@ -62,6 +62,9 @@ export const messages = {
 						cart__delete: 'Delete',
 						pay__title: 'Pay for the order',
 						pay__btn: 'Confirm',
+						cart__bin: 'sign in for add to cart',
+						add__banner__btn: 'Save',
+						empty: 'Empty',
 					},
 					[LOCALES.RUSSIAN]: {
 						home_link: 'Главная',
@@ -124,5 +127,8 @@ export const messages = {
 						cart__delete: 'Убрать',
 						pay__title: 'Оплатить заказ',
 						pay__btn: 'Подтвердить',
+						cart__bin: 'Авторизуйтесь чтобы добавить в корзину',
+						add__banner__btn: 'Сохранить',
+						empty: 'Ничего нет',
 					},
 				};

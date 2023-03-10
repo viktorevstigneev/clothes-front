@@ -13,6 +13,7 @@ import Modal from '../../common/Modal';
 
 const CartPage = () => {
 	const [user, setUser] = useState();
+	console.log('user: ', user);
 	const [cartData, setCartData] = useState();
 	const [sum, setSum] = useState();
 	const [pay, setPay] = useState(false);
@@ -42,9 +43,11 @@ const CartPage = () => {
 	}, []);
 
 	useEffect(() => {
+		const userCart = cartData && cartData.filter((value) => user.userCart && user.userCart.includes(value._id));
+
 		const summa =
-			cartData &&
-			cartData.reduce((sum, elem) => {
+			userCart &&
+			userCart.reduce((sum, elem) => {
 				return sum + +elem.price;
 			}, 0);
 
@@ -62,6 +65,9 @@ const CartPage = () => {
 		}
 	}, []);
 
+	const userCart = cartData && cartData.filter((value) => user.userCart && user.userCart.includes(value._id));
+	console.log('userCart: ', userCart);
+
 	return (
 		<>
 			<main className="cart">
@@ -70,8 +76,8 @@ const CartPage = () => {
 						<FormattedMessage id="cart__title" /> {user?.username}
 					</h2>
 					<div className="cart__content">
-						{cartData &&
-							cartData.map((item) => (
+						{userCart?.length ? (
+							userCart.map((item) => (
 								<div className="cart__item">
 									<img className="cart__image" src={`${API_URL}/getImage/${item.avatar}`} alt="cart" />
 									<p className="cart__price">
@@ -81,7 +87,12 @@ const CartPage = () => {
 										<FormattedMessage id="cart__delete" />
 									</button>
 								</div>
-							))}
+							))
+						) : (
+							<p className='empty'>
+								<FormattedMessage id="empty" />
+							</p>
+						)}
 					</div>
 					<div className="cart__bottom">
 						<p className="cart__summary">
@@ -102,7 +113,26 @@ const CartPage = () => {
 				>
 					<div className="pay__wrapper">
 						<Cards cvc={cvc} expiry={expiry} focused={focus} name={name} number={number} />
-						<form className="par__form">
+						<form
+							className="par__form"
+							encType="multipart/form-data"
+							// method="POST"
+							onSubmit={async (evt) => {
+								evt.preventDefault();
+
+								const formData = new FormData(evt.target);
+
+								// formData.append('userID', user._id);
+
+								const responseData = await axios({
+									method: 'PATCH',
+									url: `${API_URL}/profileAddOrder?userId=${user._id}`,
+									data: formData,
+									withCredentials: true,
+								});
+								window.location.reload();
+							}}
+						>
 							<input
 								className="pay__credit"
 								type="tel"

@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import DoubleSlider from 'double-slider';
 
-import Footer from '../../common/Footer';
-import Slider from '../../common/Slider';
+// import Footer from '../../common/Footer';
 
 import { clothesType, sexType } from './data';
 import './style.css';
@@ -12,11 +11,11 @@ import { FormattedMessage } from 'react-intl';
 import axios from 'axios';
 
 const ClothesPage = () => {
+	const [user, setUser] = useState();
 	const [isFiltersModalOpen, setFilterModalOpen] = useState(false);
 	const [sliderMin, setMin] = useState(0);
 	const [sliderMax, setMax] = useState(100);
 	const [activeCard, setActiveCard] = useState();
-	console.log('activeCard: ', activeCard);
 	const [showCard, setShowCard] = useState(false);
 	const [cardData, setCardData] = useState();
 
@@ -28,6 +27,15 @@ const ClothesPage = () => {
 		sex: ['Female', 'Male'],
 		type: ['Blouses', 'Shirts', 'Pants', 'Dresses', 'Skirts', 'Outerwear'],
 	});
+
+	useEffect(() => {
+		const getCurrentUser = async () => {
+			const responseData = await axios
+				.get(`${API_URL}/profile`, { withCredentials: true })
+				.then((response) => setUser(response.data));
+		};
+		getCurrentUser();
+	}, []);
 
 	useEffect(() => {
 		const getClothes = async () => {
@@ -240,7 +248,21 @@ const ClothesPage = () => {
 							<p className="open__price">
 								<FormattedMessage id="clothes__price__title" />: {activeCard.price}$
 							</p>
-							<p className="open__cart">&#128722;</p>
+							{user && user ? (
+								<p
+									className="open__cart"
+									onClick={async () => {
+										await axios.patch(`${API_URL}/profile`, { productID: activeCard._id, userID: user._id });
+										window.location.reload();
+									}}
+								>
+									&#128722;
+								</p>
+							) : (
+								<p className="open__cart-no">
+									<FormattedMessage id="cart__bin" />
+								</p>
+							)}
 						</div>
 					</div>
 				</Modal>
