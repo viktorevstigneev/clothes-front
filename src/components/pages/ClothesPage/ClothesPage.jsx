@@ -4,18 +4,58 @@ import DoubleSlider from 'double-slider';
 import Footer from '../../common/Footer';
 import Slider from '../../common/Slider';
 
-import { clothesType, sexType, cardData } from './data';
+import { clothesType, sexType } from './data';
 import './style.css';
 import { API_URL, POPUP_OVERLAY_CLASSNAME } from '../../../constants';
 import Modal from '../../common/Modal';
 import { FormattedMessage } from 'react-intl';
+import axios from 'axios';
 
 const ClothesPage = () => {
 	const [isFiltersModalOpen, setFilterModalOpen] = useState(false);
 	const [sliderMin, setMin] = useState(0);
 	const [sliderMax, setMax] = useState(100);
 	const [activeCard, setActiveCard] = useState();
+	console.log('activeCard: ', activeCard);
 	const [showCard, setShowCard] = useState(false);
+	const [cardData, setCardData] = useState();
+
+	const [filteredCards, setFilteredCards] = useState();
+
+	const [filter, setFilter] = useState({
+		maxPrice: 100,
+		minPrice: 0,
+		sex: ['Female', 'Male'],
+		type: ['Blouses', 'Shirts', 'Pants', 'Dresses', 'Skirts', 'Outerwear'],
+	});
+
+	useEffect(() => {
+		const getClothes = async () => {
+			const responseData = await axios.get(`${API_URL}/team`, { withCredentials: true }).then((response) => {
+				setCardData(response.data);
+				setFilteredCards(response.data);
+			});
+		};
+		getClothes();
+	}, []);
+
+	useEffect(() => {
+		const mySlider = new DoubleSlider(document.getElementById('my-slider'));
+
+		mySlider.addEventListener('slider:change', () => {
+			const { min, max } = mySlider.value;
+			setMin(min || 0);
+			setMax(max || 100);
+			setFilter({
+				...filter,
+				minPrice: min,
+				maxPrice: max,
+			});
+		});
+		// return () => {
+		// 	mySlider.removeEventListener('slider:change', handleChange);
+		// };
+	}, []);
 
 	const handleModalWindowCloseButtonClick = useCallback((evt) => {
 		evt.preventDefault();
@@ -30,25 +70,20 @@ const ClothesPage = () => {
 		}
 	}, []);
 
-	useEffect(() => {
-		const mySlider = new DoubleSlider(document.getElementById('my-slider'));
+	const filterArray = (arr) => {
+		let newArr = arr && arr.filter((item) => item.price > filter.minPrice && item.price < filter.maxPrice);
 
+		newArr = newArr.filter((item) => filter.type.includes(item.typeClothes));
+		newArr = newArr.filter((item) => filter.sex.includes(item.sexThing));
 
-		mySlider.addEventListener('slider:change', () => {
-			const { min, max } = mySlider.value;
-			setMin(min || 0);
-			setMax(max || 100);
-			console.log(`Min is: ${min}, max is: ${max}`);
-		});
+		return newArr;
+	};
 
-		// return () => {
-		// 	mySlider.removeEventListener('slider:change', handleChange);
-		// };
-	}, []);
+	const handleApplyFilters = (evt) => {
+		evt.preventDefault();
 
-	
-
-	
+		setFilteredCards(filterArray(cardData));
+	};
 
 	return (
 		<>
@@ -69,23 +104,27 @@ const ClothesPage = () => {
 					</div>
 
 					<div className="clothes__content">
-						{cardData.map((item) => (
-							<div
-								className="clothes__card"
-								onClick={() => {
-									setActiveCard(item);
-									setShowCard(true);
-								}}
-							>
-								<img className="clothes__img" src={item.image} alt="" />
-								<div className="clothes__bottom">
-									<p className="clothes__price">Price: {item.price}$</p>
+						{filteredCards &&
+							filteredCards.map((item) => (
+								<div
+									className="clothes__card"
+									onClick={() => {
+										setActiveCard(item);
+										setShowCard(true);
+									}}
+								>
+									<img className="clothes__img" src={`${API_URL}/getImage/${item.avatar}`} alt="" />
+									<div className="clothes__bottom">
+										<p className="clothes__price">
+											<FormattedMessage id="clothes__price__title" />: {item.price}$
+										</p>
+									</div>
 								</div>
-							</div>
-						))}
+							))}
 					</div>
 				</div>
 			</main>
+
 			{/* <Footer /> */}
 			<Modal
 				style={{ with: !isFiltersModalOpen && '0', height: !isFiltersModalOpen && '0' }}
@@ -93,50 +132,116 @@ const ClothesPage = () => {
 				onCloseButtonClick={handleModalWindowCloseButtonClick}
 				onOverlayClick={handleModalWindowOverlayClick}
 			>
-				<div className="filter__block">
-					<h2 className="filter__title">Price Filter</h2>
-					<div id="my-slider" data-min="0" data-max="100" data-range="100"></div>
-					<div className="filter__price">
-						<div className="filter__cost">{sliderMin}$</div>
-						<div className="filter__cost">{sliderMax}$</div>
+				<form action="" onSubmit={handleApplyFilters}>
+					<div className="filter__block">
+						<h2 className="filter__title">
+							<FormattedMessage id="filter__price" />
+						</h2>
+						<div id="my-slider" data-min="0" data-max="100" data-range="100"></div>
+						<div className="filter__price">
+							<div className="filter__cost">{sliderMin}$</div>
+							<div className="filter__cost">{sliderMax}$</div>
+						</div>
 					</div>
-				</div>
-				<div className="filter__block">
-					<h2 className="filter__title">Clothes type</h2>
-					<div className="filter__wrapper">
-						{clothesType.map(({ id }) => (
-							<div className="filter__item">
-								<input className="filter__checkbox" type="checkbox" id={id} name={id} />
-								<label htmlFor={id}>{id}</label>
-							</div>
-						))}
-					</div>
-				</div>
+					<div className="filter__block">
+						<h2 className="filter__title">
+							<FormattedMessage id="filter__type" />
+						</h2>
+						<div className="filter__wrapper">
+							{clothesType.map(({ id, translate }) => (
+								<div className="filter__item">
+									<input
+										className="filter__checkbox"
+										onChange={(evt) => {
+											const newArr = filter.type;
 
-				<div className="filter__block">
-					<h2 className="filter__title">Sex</h2>
-					<div className="filter__wrapper">
-						{sexType.map(({ id }) => (
-							<div className="filter__item">
-								<input className="filter__checkbox" type="checkbox" id={id} name={id} />
-								<label htmlFor={id}>{id}</label>
-							</div>
-						))}
-					</div>
-				</div>
+											if (evt.target.checked) {
+												newArr.push(evt.target.name);
+												let set = new Set(newArr);
 
-				<button className="filter__apply">Apply</button>
+												setFilter({
+													...filter,
+													type: Array.from(set),
+												});
+											} else {
+												newArr.pop(evt.target.name);
+												let set = new Set(newArr);
+
+												setFilter({
+													...filter,
+													type: Array.from(set),
+												});
+											}
+										}}
+										type="checkbox"
+										id={id}
+										name={id}
+									/>
+									<label htmlFor={id}>{translate}</label>
+								</div>
+							))}
+						</div>
+					</div>
+
+					<div className="filter__block">
+						<h2 className="filter__title">
+							<FormattedMessage id="filter__sex" />
+						</h2>
+						<div className="filter__wrapper">
+							{sexType.map(({ id, translate }) => (
+								<div className="filter__item">
+									<input
+										className="filter__checkbox"
+										onChange={(evt) => {
+											const newArr = filter.sex;
+
+											if (evt.target.checked) {
+												newArr.push(evt.target.name);
+												let set = new Set(newArr);
+
+												setFilter({
+													...filter,
+													sex: Array.from(set),
+												});
+											} else {
+												newArr.pop(evt.target.name);
+												let set = new Set(newArr);
+
+												setFilter({
+													...filter,
+													sex: Array.from(set),
+												});
+											}
+										}}
+										type="checkbox"
+										id={id}
+										name={id}
+									/>
+									<label htmlFor={id}>{translate}</label>
+								</div>
+							))}
+						</div>
+					</div>
+
+					<button className="filter__apply">
+						<FormattedMessage id="filter__apply" />
+					</button>
+				</form>
 			</Modal>
 
 			{showCard && (
-				<Modal
-					title={<FormattedMessage id="filters__btn" />}
-					onCloseButtonClick={handleModalWindowCloseButtonClick}
-					onOverlayClick={handleModalWindowOverlayClick}
-				>
-					<img className="clothes__img" src={activeCard.image} alt="" />
-					<div className="clothes__bottom">
-						<p className="clothes__price">Price: {activeCard.price}$</p>
+				<Modal onCloseButtonClick={handleModalWindowCloseButtonClick} onOverlayClick={handleModalWindowOverlayClick}>
+					<div className="open__block">
+						<div className="open__container">
+							<img className="open__img" src={`${API_URL}/getImage/${activeCard.avatar}`} alt="" />
+							<p className="open__description"> {activeCard.description}</p>
+						</div>
+						<div className="open__bottom">
+							<p className="open__price">
+								<FormattedMessage id="clothes__price__title" />: {activeCard.price}$
+							</p>
+							<p className="open__cart">&#128722;</p>
+						</div>
 					</div>
 				</Modal>
 			)}

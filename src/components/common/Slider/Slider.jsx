@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import Slider from 'react-slick';
 import { API_URL, POPUP_OVERLAY_CLASSNAME } from '../../../constants';
@@ -8,6 +8,7 @@ import './style.css';
 
 import ban1 from '../../../img/ban_1.png';
 import ban2 from '../../../img/ban_2.png';
+import axios from 'axios';
 
 const bannerData = [
 	{
@@ -20,6 +21,7 @@ const bannerData = [
 
 const ImageSlider = ({ data }) => {
 	const [isPopupEditOpen, setPopupEditOpen] = useState(false);
+	const [user, setUser] = useState();
 
 	const settings = {
 		dots: false,
@@ -42,16 +44,25 @@ const ImageSlider = ({ data }) => {
 
 	console.log('bannerData: ', bannerData);
 
+	useEffect(() => {
+		const getCurrentUser = async () => {
+			const responseData = await axios
+				.get(`${API_URL}/profile`, { withCredentials: true })
+				.then((response) => setUser(response.data));
+		};
+		getCurrentUser();
+	}, []);
+
 	return (
 		<div className="slider">
-			<p
+			{user && user.isAdmin ? <p
 				className="slider__edit-btn"
 				onClick={() => {
 					setPopupEditOpen(true);
 				}}
 			>
 				<FormattedMessage id="edit_slider_btn" />
-			</p>
+			</p> : ''}
 			<Slider {...settings}>
 				{data &&
 					data.map((item, index) => (
@@ -71,7 +82,7 @@ const ImageSlider = ({ data }) => {
 						{bannerData.map((item) => (
 							<Banner image={item.image} />
 						))}
-						<Banner isDashed={true}/>
+						<Banner isDashed={true} />
 					</div>
 				</Modal>
 			)}

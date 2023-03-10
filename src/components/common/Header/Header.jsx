@@ -21,11 +21,12 @@ import { API_URL } from '../../../constants';
 import { LOCALES } from '../../i18n/locales';
 import { messages } from '../../i18n/messages';
 
-const Header = ({ handleChange, currentLocale }) => {
+import { signUp } from '../../pages/Signup/utils';
+import { signIn } from '../../pages/SignIn/utils';
 
+const Header = ({ handleChange, currentLocale }) => {
 	const navigate = useNavigate();
 	const [user, setUser] = useState();
-	console.log('user: ', user);
 	const [isPopupRegistrOpen, setPopupRegistrOpen] = useState(false);
 	const [isPopupAuthOpen, setPopupAuthOpen] = useState(false);
 
@@ -36,10 +37,6 @@ const Header = ({ handleChange, currentLocale }) => {
 				.then((response) => setUser(response.data));
 		};
 		getCurrentUser();
-		setUser({
-			name: "fgkdgf",
-			isAdmin:true
-		})
 	}, []);
 
 	const languages = [
@@ -59,6 +56,20 @@ const Header = ({ handleChange, currentLocale }) => {
 			setPopupAuthOpen(false);
 		}
 	}, []);
+
+	const handleFormSubmitRegistr = useCallback((evt) => {
+		evt.preventDefault();
+		const formData = Object.fromEntries(new FormData(evt.target));
+
+		signUp({ formData, setUser });
+	});
+
+	const handleFormSubmit = useCallback((evt) => {
+		evt.preventDefault();
+		const formData = Object.fromEntries(new FormData(evt.target));
+
+		signIn({ formData, setUser });
+	});
 
 	return (
 		<header className="header">
@@ -93,7 +104,7 @@ const Header = ({ handleChange, currentLocale }) => {
 
 					{user && user.isAdmin ? (
 						<Link className="header__link" to="/admin">
-							Admin
+							<FormattedMessage id="admin_link" />
 						</Link>
 					) : null}
 
@@ -126,11 +137,16 @@ const Header = ({ handleChange, currentLocale }) => {
 						className="header__link"
 						// href={user && Object.keys(user).length !== 0 ? '/profile' : '#'}
 						onClick={() => {
-							!user  ? setPopupRegistrOpen(true) : navigate("/profile");
+							!user ? setPopupRegistrOpen(true) : navigate('/profile');
 						}}
 					>
 						<img src={profile} alt="inst" />
 					</div>
+					{user ? (
+						<Link className="header__link cart__link" to="/cart">
+							&#128722;
+						</Link>
+					) : null}
 				</div>
 			</div>
 			{/* registration modal */}
@@ -140,30 +156,32 @@ const Header = ({ handleChange, currentLocale }) => {
 					onCloseButtonClick={handleModalWindowCloseButtonClick}
 					onOverlayClick={handleModalWindowOverlayClick}
 				>
-					<img className="auth__image" src={authDefault} alt="" />
+					<form className="auth__form" action={API_URL} method="POST" onSubmit={handleFormSubmitRegistr}>
+						<img className="auth__image" src={authDefault} alt="" />
 
-					<div className="auth__wrapper">
-						<div className="auth__preinput">@</div>
-						<InputIntl idName="registr_placeholder_1" />
-					</div>
-					<div className="auth__wrapper">
-						<div className="auth__preinput">*</div>
-						<InputIntl idName="registr_placeholder_2" />
-					</div>
+						<div className="auth__wrapper">
+							<div className="auth__preinput">@</div>
+							<InputIntl name="username" idName="registr_placeholder_1" />
+						</div>
+						<div className="auth__wrapper">
+							<div className="auth__preinput">*</div>
+							<InputIntl name="password" type="password" idName="registr_placeholder_2" />
+						</div>
 
-					<button className="auth__button">
-						<FormattedMessage id="registr_btn" />
-					</button>
+						<button className="auth__button" type="submit">
+							<FormattedMessage id="registr_btn" />
+						</button>
 
-					<p
-						className="auth__next"
-						onClick={() => {
-							setPopupRegistrOpen(false);
-							setPopupAuthOpen(true);
-						}}
-					>
-						<FormattedMessage id="regist_post_title" />
-					</p>
+						<p
+							className="auth__next"
+							onClick={() => {
+								setPopupRegistrOpen(false);
+								setPopupAuthOpen(true);
+							}}
+						>
+							<FormattedMessage id="regist_post_title" />
+						</p>
+					</form>
 				</Modal>
 			)}
 
@@ -175,30 +193,32 @@ const Header = ({ handleChange, currentLocale }) => {
 					onCloseButtonClick={handleModalWindowCloseButtonClick}
 					onOverlayClick={handleModalWindowOverlayClick}
 				>
-					<img className="auth__image" src={authDefault} alt="" />
+					<form className="auth__form" action={API_URL} method="POST" onSubmit={handleFormSubmitRegistr}>
+						<img className="auth__image" src={authDefault} alt="" />
 
-					<div className="auth__wrapper">
-						<div className="auth__preinput">@</div>
-						<InputIntl idName="registr_placeholder_1" />
-					</div>
-					<div className="auth__wrapper">
-						<div className="auth__preinput">*</div>
-						<InputIntl idName="registr_placeholder_2" />
-					</div>
+						<div className="auth__wrapper">
+							<div className="auth__preinput">@</div>
+							<InputIntl name="username" idName="registr_placeholder_1" />
+						</div>
+						<div className="auth__wrapper">
+							<div className="auth__preinput">*</div>
+							<InputIntl name="password" type="password" idName="registr_placeholder_2" />
+						</div>
 
-					<button className="auth__button">
-						<FormattedMessage id="auth_btn" />
-					</button>
+						<button className="auth__button" type="submit">
+							<FormattedMessage id="auth_btn" />
+						</button>
 
-					<p
-						className="auth__next"
-						onClick={() => {
-							setPopupRegistrOpen(true);
-							setPopupAuthOpen(false);
-						}}
-					>
-						<FormattedMessage id="auth_post_title" />
-					</p>
+						<p
+							className="auth__next"
+							onClick={() => {
+								setPopupRegistrOpen(true);
+								setPopupAuthOpen(false);
+							}}
+						>
+							<FormattedMessage id="auth_post_title" />
+						</p>
+					</form>
 				</Modal>
 			)}
 		</header>

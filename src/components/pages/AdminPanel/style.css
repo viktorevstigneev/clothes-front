@@ -4,6 +4,7 @@
 	background-size: cover;
 	/* height: 800px; */
 	border-top: 1px solid #000;
+	
 }
 
 .admin__person {
@@ -21,6 +22,7 @@
 
 .admin__right {
 	width: 40%;
+	font-family: Pompiere;
 }
 .admin__title {
 	margin-top: 10%;
@@ -121,6 +123,7 @@
 
 .admin__button {
 	background: #222222;
+	border-radius: 100px;
 	padding: 15px 50px;
 	color: #fff;
 	font-size: 18px;

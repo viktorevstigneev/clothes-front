@@ -11,6 +11,7 @@
 }
 .editor__avatar {
 	width: 100%;
+	height: 100%;
 }
 
 .editor__label {
@@ -25,15 +26,19 @@
 	overflow-y: scroll;
 }
 
+.editor__drop{
+	text-align: center;
+}
 
 .editor__input {
-	/* width: 100%; */
-	/* height: 20%; */
+	width: 100%;
+	height: 100%;
 	color: transparent;
 	position: absolute;
-	top: 20%;
-	left: 40%;
-	height: 200px;
+	display: block;
+	top: 0;
+	left: 0;
+	/* height: 200px; */
 }
 
 .editor__input::-webkit-file-upload-button {
@@ -50,4 +55,10 @@
 	cursor: pointer;
 	font-weight: 700;
 	font-size: 10pt;
+
+	position: absolute;
+	top: 40%;
+	left: 35%;
 }
+
+

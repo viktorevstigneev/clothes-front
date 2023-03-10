@@ -9,15 +9,17 @@ import './style.css';
 
 import { API_URL } from '../../../constants';
 import { clothesType, sexType } from '../ClothesPage/data';
+import { FormattedMessage } from 'react-intl';
 
-const AdminPanel = ({}) => {
+const AdminPanel = () => {
 	const [file, setFile] = useState('');
 
 
 	return (
 		<section className="admin">
-			<Header />
-			<h1 className="admin__title">add new thing</h1>
+			<h1 className="admin__title">
+				<FormattedMessage id="admin__title" />
+			</h1>
 			<form
 				className="admin__person"
 				encType="multipart/form-data"
@@ -56,7 +58,7 @@ const AdminPanel = ({}) => {
 
 				<div className="admin__right">
 					<label className="music__label" htmlFor="type">
-						Choose clothes type
+						<FormattedMessage id="admin__type__title" />
 					</label>
 					<select className="admin__text-input" name="typeClothes" id="type">
 						{clothesType.map(({ id }) => (
@@ -67,7 +69,7 @@ const AdminPanel = ({}) => {
 					</select>
 
 					<label className="music__label" htmlFor="sex">
-						Choose Sex
+						<FormattedMessage id="admin__sex__title" />
 					</label>
 					<select className="admin__text-input" name="sexThing" id="sex">
 						{sexType.map(({ id }) => (
@@ -77,12 +79,17 @@ const AdminPanel = ({}) => {
 						))}
 					</select>
 
+					<label className="music__label" htmlFor="decript">
+						<FormattedMessage id="admin__description__title" />
+					</label>
+					<input className="admin__text-input" type="text" name="description" id="descript" />
+
 					<label className="music__label" htmlFor="price">
-						Choose Price Thing
+						<FormattedMessage id="admin__price__title" />
 					</label>
 					<input className="admin__text-input" type="number" name="price" id="price" />
 					<button className="admin__button" type="submit">
-						Add thing
+						<FormattedMessage id="admin__add__btn" />
 					</button>
 				</div>
 			</form>

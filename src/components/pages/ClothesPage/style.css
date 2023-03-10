@@ -46,7 +46,7 @@
 	color: white;
 }
 #my-slider {
-	color: rgb(0, 255, 242);
+	color: rgb(0, 0, 0);
 }
 .filter__block {
 	/* width: 90%;
@@ -81,6 +81,7 @@
 
 .filter__item {
 	display: flex;
+	align-items: baseline;
 	width: 100px;
 }
 
@@ -99,6 +100,34 @@
 	cursor: pointer;
 }
 
-.filter__apply:hover{
+.filter__apply:hover {
 	background: rgb(107, 107, 107);
+}
+
+.open__img {
+	width: 50%;
+}
+
+.open__container{
+	display: flex;
+}
+.open__description {
+	font-family: Pompiere;
+	font-weight: 600;
+
+	font-size: 24px;
+	color: black;
+	margin-left: 5px;
+}
+.open__price,
+.open__cart {
+	font-family: Pompiere;
+	font-weight: 600;
+
+	font-size: 24px;
+}
+
+.open__bottom {
+	display: flex;
+	justify-content: space-between;
 }

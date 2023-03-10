@@ -9,6 +9,7 @@ import './style.css';
 import { API_URL } from '../../../constants';
 import { profileData } from './data';
 import defaultImg from '../../../img/default.png';
+import { FormattedMessage } from 'react-intl';
 
 const orders = [
 	{
@@ -42,19 +43,28 @@ const ProfilePage = () => {
 		<>
 			<main className="profile">
 				<div className="profile__container">
-					<h1 className="profile__title">Profile</h1>
+					<h1 className="profile__title">
+						<FormattedMessage id="profile__title" />
+					</h1>
 					<div className="profile__wrapper">
 						<img className="profile__avatar" src={defaultImg} alt="" />
 						<div className="profile__block">
-							<p className="profile__cred">Username: dkfdf</p>
-							<p className="profile__cred">Email: gdjfdfsfs</p>
+							<p className="profile__cred">
+								<FormattedMessage id="profile__username" />: dkfdf
+							</p>
+							{/* <p className="profile__cred">Email: gdjfdfsfs</p> */}
 						</div>
 					</div>
 				</div>
 				<div className="profile__bottom">
 					<div className="bottom__head">
-						<p className="bottom__title">Orders:</p>
-						<p className="bottom__title"> Order status:</p>
+						<p className="bottom__title">
+							<FormattedMessage id="profile__orders" />:
+						</p>
+						<p className="bottom__title">
+							{' '}
+							<FormattedMessage id="profile__orders__status" />:
+						</p>
 					</div>
 					{orders.map((order) => (
 						<div className="bottom__order">

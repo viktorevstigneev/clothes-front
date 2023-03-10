@@ -7,9 +7,9 @@ const Banner = ({ image, isDashed }) => {
 	return (
 		<div className="editor__block" style={{ border: isDashed ? '3px dashed rgb(61, 61, 61)' : 'none' }}>
 			{/* <label className="editor__label" htmlFor="avatar"> */}
-			<img className="editor__avatar" src={file ? URL.createObjectURL(file) : image} />
+			{!isDashed || file ? <img className="editor__avatar" src={file ? URL.createObjectURL(file) : image} /> : null}
 			{/* </label> */}
-			{isDashed && (
+			{isDashed && !file ? (
 				<>
 					<p className="editor__drop">Drop file there or</p>
 					<input
@@ -19,8 +19,8 @@ const Banner = ({ image, isDashed }) => {
 						type="file"
 						onChange={(evt) => setFile(evt.target.files[0])}
 					/>
-				</>
-			)}
+				</> 
+			) : null}
 		</div>
 	);
 };

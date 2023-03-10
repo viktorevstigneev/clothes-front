@@ -1,15 +1,19 @@
+import { FormattedMessage } from 'react-intl';
 import card from '../../../img/card.png';
 
 export const clothesType = [
-	{ id: 'Outerwear' },
-	{ id: 'Skirts' },
-	{ id: 'Dresses' },
-	{ id: 'Pants' },
-	{ id: 'Shirts' },
-	{ id: 'Blouses' },
-];
+					{ id: 'Outerwear', translate: <FormattedMessage id="clothes__type__Outerwear" /> },
+					{ id: 'Skirts', translate: <FormattedMessage id="clothes__type__Skirts" /> },
+					{ id: 'Dresses', translate: <FormattedMessage id="clothes__type__Dresses" /> },
+					{ id: 'Pants', translate: <FormattedMessage id="clothes__type__Pants" /> },
+					{ id: 'Shirts', translate: <FormattedMessage id="clothes__type__Shirts" /> },
+					{ id: 'Blouses', translate: <FormattedMessage id="clothes__type__Blouses" /> },
+				];
 
-export const sexType = [{ id: 'Male' }, { id: 'Female' }];
+export const sexType = [
+					{ id: 'Male', translate: <FormattedMessage id="clothes__sex__male" /> },
+					{ id: 'Female', translate: <FormattedMessage id="clothes__sex__female" /> },
+				];
 
 export const cardData = [
 	{

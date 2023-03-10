@@ -29,6 +29,7 @@
 }
 .header__nav-right {
 	display: flex;
+	align-items: center;
 }
 
 .header__link {
@@ -37,6 +38,12 @@
 	border-radius: 100px;
 	margin-left: 10px;
 	text-decoration: none;
+}
+
+.cart__link {
+	font-size: 27px;
+	position: relative;
+	bottom: 5px;
 }
 
 .header__icon {
