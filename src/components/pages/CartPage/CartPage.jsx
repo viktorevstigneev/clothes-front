@@ -65,7 +65,7 @@ const CartPage = () => {
 		}
 	}, []);
 
-	const userCart = cartData && cartData.filter((value) => user.userCart && user.userCart.includes(value._id));
+	const userCart = cartData && cartData.filter((value) => user?.userCart && user?.userCart.includes(value._id));
 	console.log('userCart: ', userCart);
 
 	return (
