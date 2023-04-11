@@ -65,6 +65,7 @@ export const messages = {
 						cart__bin: 'sign in for add to cart',
 						add__banner__btn: 'Save',
 						empty: 'Empty',
+						edit_btn: 'Save',
 					},
 					[LOCALES.RUSSIAN]: {
 						home_link: 'Главная',
@@ -130,5 +131,6 @@ export const messages = {
 						cart__bin: 'Авторизуйтесь чтобы добавить в корзину',
 						add__banner__btn: 'Сохранить',
 						empty: 'Ничего нет',
+						edit_btn: 'Сохранить',
 					},
 				};

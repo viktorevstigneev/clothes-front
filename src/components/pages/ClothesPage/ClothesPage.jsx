@@ -14,9 +14,10 @@ const ClothesPage = () => {
 	const [user, setUser] = useState();
 	const [isFiltersModalOpen, setFilterModalOpen] = useState(false);
 	const [sliderMin, setMin] = useState(0);
-	const [sliderMax, setMax] = useState(100);
+	const [sliderMax, setMax] = useState(500);
 	const [activeCard, setActiveCard] = useState();
 	const [showCard, setShowCard] = useState(false);
+	const [showCardEdit, setShowCardEdit] = useState(false);
 	const [cardData, setCardData] = useState();
 
 	const [filteredCards, setFilteredCards] = useState();
@@ -27,6 +28,12 @@ const ClothesPage = () => {
 		sex: ['Female', 'Male'],
 		type: ['Blouses', 'Shirts', 'Pants', 'Dresses', 'Skirts', 'Outerwear'],
 	});
+
+
+
+	const [cardPrice, setCardPrice] = useState(activeCard && activeCard?.price);
+	const [cardDesc, setCardDesc] = useState(activeCard && activeCard?.description);
+	const [file, setFile] = useState('');
 
 	useEffect(() => {
 		const getCurrentUser = async () => {
@@ -53,7 +60,7 @@ const ClothesPage = () => {
 		mySlider.addEventListener('slider:change', () => {
 			const { min, max } = mySlider.value;
 			setMin(min || 0);
-			setMax(max || 100);
+			setMax(max || 500);
 			setFilter({
 				...filter,
 				minPrice: min,
@@ -69,12 +76,14 @@ const ClothesPage = () => {
 		evt.preventDefault();
 		setFilterModalOpen(false);
 		setShowCard(false);
+		setShowCardEdit(false);
 	}, []);
 
 	const handleModalWindowOverlayClick = useCallback((evt) => {
 		if (evt.target.classList.contains(POPUP_OVERLAY_CLASSNAME)) {
 			setFilterModalOpen(false);
 			setShowCard(false);
+			setShowCardEdit(false);
 		}
 	}, []);
 
@@ -118,9 +127,22 @@ const ClothesPage = () => {
 									className="clothes__card"
 									onClick={() => {
 										setActiveCard(item);
+										setCardPrice(item.price);
+										setCardDesc(item.description);
 										setShowCard(true);
 									}}
 								>
+									{user && user.isAdmin && (
+										<span
+											className="clothes_card--delete"
+											onClick={async (event) => {
+												event.stopPropagation();
+												await axios.delete(`${API_URL}/team/${item._id}`, { withCredentials: true });
+											}}
+										>
+											&times;
+										</span>
+									)}
 									<img className="clothes__img" src={`${API_URL}/getImage/${item.avatar}`} alt="" />
 									<div className="clothes__bottom">
 										<p className="clothes__price">
@@ -145,7 +167,7 @@ const ClothesPage = () => {
 						<h2 className="filter__title">
 							<FormattedMessage id="filter__price" />
 						</h2>
-						<div id="my-slider" data-min="0" data-max="100" data-range="100"></div>
+						<div id="my-slider" data-min="0" data-max="500" data-range="500"></div>
 						<div className="filter__price">
 							<div className="filter__cost">{sliderMin}$</div>
 							<div className="filter__cost">{sliderMax}$</div>
@@ -240,6 +262,17 @@ const ClothesPage = () => {
 			{showCard && (
 				<Modal onCloseButtonClick={handleModalWindowCloseButtonClick} onOverlayClick={handleModalWindowOverlayClick}>
 					<div className="open__block">
+						{user && user.isAdmin && (
+							<p
+								className="open__edit__card"
+								onClick={() => {
+									setShowCard(false);
+									setShowCardEdit(true);
+								}}
+							>
+								<FormattedMessage id="edit_slider_btn" /> &#9998;
+							</p>
+						)}
 						<div className="open__container">
 							<img className="open__img" src={`${API_URL}/getImage/${activeCard.avatar}`} alt="" />
 							<p className="open__description"> {activeCard.description}</p>
@@ -265,6 +298,76 @@ const ClothesPage = () => {
 							)}
 						</div>
 					</div>
+				</Modal>
+			)}
+
+			{showCardEdit && (
+				<Modal onCloseButtonClick={handleModalWindowCloseButtonClick} onOverlayClick={handleModalWindowOverlayClick}>
+					<form
+						className="open__block"
+						encType="multipart/form-data"
+						onSubmit={async (evt) => {
+							evt.preventDefault();
+
+							const formData = new FormData(evt.target);
+
+							const responseData = await axios({
+								method: 'PATCH',
+								url: `${API_URL}/team/${user._id}`,
+								data: formData,
+								withCredentials: true,
+							});
+							window.location.reload();
+						}}
+					>
+						<div className="open__container">
+							<div className="e__block">
+								<label className="e__label" htmlFor="avatar">
+									<img
+										className="e__avatar"
+										src={file ? URL.createObjectURL(file) : `${API_URL}/getImage/${activeCard.avatar}`}
+										alt="menu_picture"
+									/>
+									<div className="e__icon">&#128449;</div>
+								</label>
+								<input
+									className="e__input"
+									id="avatar"
+									name="avatar"
+									type="file"
+									onChange={(evt) => setFile(evt.target.files[0])}
+								/>
+							</div>
+							<textarea
+								className="open__description"
+								style={{ resize: 'none', width: '100%' }}
+								type="text"
+								name="description"
+								onChange={(evt) => {
+									setCardDesc(evt.target.value);
+								}}
+								value={cardDesc}
+							></textarea>
+						</div>
+						<div className="open__bottom">
+							<p className="open__price">
+								<FormattedMessage id="clothes__price__title" />:{' '}
+								<input
+									type="text"
+									name="price"
+									onChange={(evt) => {
+										setCardPrice(evt.target.value);
+									}}
+									value={cardPrice}
+								/>
+								$
+							</p>
+						</div>
+
+						<button className="edit__button" type="submit">
+							<FormattedMessage id="edit_btn" />
+						</button>
+					</form>
 				</Modal>
 			)}
 		</>

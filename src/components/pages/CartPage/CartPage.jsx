@@ -13,7 +13,6 @@ import Modal from '../../common/Modal';
 
 const CartPage = () => {
 	const [user, setUser] = useState();
-	console.log('user: ', user);
 	const [cartData, setCartData] = useState();
 	const [sum, setSum] = useState();
 	const [pay, setPay] = useState(false);
@@ -43,7 +42,7 @@ const CartPage = () => {
 	}, []);
 
 	useEffect(() => {
-		const userCart = cartData && cartData.filter((value) => user.userCart && user.userCart.includes(value._id));
+		const userCart = cartData && cartData.filter((value) => user?.userCart && user?.userCart.includes(value._id));
 
 		const summa =
 			userCart &&
@@ -66,7 +65,6 @@ const CartPage = () => {
 	}, []);
 
 	const userCart = cartData && cartData.filter((value) => user?.userCart && user?.userCart.includes(value._id));
-	console.log('userCart: ', userCart);
 
 	return (
 		<>
@@ -83,13 +81,19 @@ const CartPage = () => {
 									<p className="cart__price">
 										<FormattedMessage id="clothes__price__title" />: {item.price}$
 									</p>
-									<button className="cart__delete">
+									<button
+										className="cart__delete"
+										onClick={async () => {
+											await axios.patch(`${API_URL}/profileDeleteFromCart`, { productID: item._id, userID: user._id });
+											window.location.reload();
+										}}
+									>
 										<FormattedMessage id="cart__delete" />
 									</button>
 								</div>
 							))
 						) : (
-							<p className='empty'>
+							<p className="empty">
 								<FormattedMessage id="empty" />
 							</p>
 						)}
@@ -98,9 +102,11 @@ const CartPage = () => {
 						<p className="cart__summary">
 							<FormattedMessage id="cart__sum" />: {sum}$
 						</p>
-						<button className="cart__button" onClick={() => setPay(true)}>
-							<FormattedMessage id="cart__btn" />
-						</button>
+						{userCart?.length ? (
+							<button className="cart__button" onClick={() => setPay(true)}>
+								<FormattedMessage id="cart__btn" />
+							</button>
+						) : null}
 					</div>
 				</div>
 			</main>

@@ -46,6 +46,16 @@
 	bottom: 5px;
 }
 
+.cart__amount{
+	position: absolute;
+	left: 0;
+	top: 0;
+	background: red;
+	border-radius: 100px;
+	padding: 3px;
+	font-size: 12px;
+}
+
 .header__icon {
 	width: 35px;
 	height: 35px;
