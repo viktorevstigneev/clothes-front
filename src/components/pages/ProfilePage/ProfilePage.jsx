@@ -40,7 +40,7 @@ const orders = [
 
 const ProfilePage = () => {
 	const [user, setUser] = useState();
-		const [cartData, setCartData] = useState();
+	const [cartData, setCartData] = useState();
 	useEffect(() => {
 		const getCurrentUser = async () => {
 			const responseData = await axios
@@ -50,14 +50,14 @@ const ProfilePage = () => {
 		getCurrentUser();
 	}, []);
 
-		useEffect(() => {
-			const getClothes = async () => {
-				const responseData = await axios.get(`${API_URL}/team`, { withCredentials: true }).then((response) => {
-					setCartData(response.data);
-				});
-			};
-			getClothes();
-		}, []);
+	useEffect(() => {
+		const getClothes = async () => {
+			const responseData = await axios.get(`${API_URL}/team`, { withCredentials: true }).then((response) => {
+				setCartData(response.data);
+			});
+		};
+		getClothes();
+	}, []);
 
 	const userOrder = cartData && cartData.filter((value) => user?.order && user?.order.includes(value._id));
 	console.log('userOrder: ', userOrder);
@@ -85,20 +85,22 @@ const ProfilePage = () => {
 							<FormattedMessage id="profile__orders" />:
 						</p>
 						<p className="bottom__title">
-							{' '}
 							<FormattedMessage id="profile__orders__status" />:
 						</p>
 					</div>
 					{userOrder ? (
 						userOrder.map((order) => (
 							<div className="bottom__order">
-								<p className="bottom__order-name">{order?.typeClothes}</p>
+								<div style={{display: "flex", alignItems: "center"}}>
+									<p className="bottom__order-name">{order?.typeClothes}</p>
+									<img width={50} src={`${API_URL}/getImage/${order?.avatar}`} alt="pict" />
+								</div>
 								<p className="bottom__order-name">is proceed</p>
 							</div>
 						))
 					) : (
 						<div className="bottom__order">
-							<FormattedMessage id="empty" />{' '}  
+							<FormattedMessage id="empty" />{' '}
 						</div>
 					)}
 				</div>

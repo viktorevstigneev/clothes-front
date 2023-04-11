@@ -306,6 +306,7 @@ const ClothesPage = () => {
 					<form
 						className="open__block"
 						encType="multipart/form-data"
+						method='POST'
 						onSubmit={async (evt) => {
 							evt.preventDefault();
 
@@ -313,7 +314,7 @@ const ClothesPage = () => {
 
 							const responseData = await axios({
 								method: 'PATCH',
-								url: `${API_URL}/team/${user._id}`,
+								url: `${API_URL}/team/${activeCard._id}`,
 								data: formData,
 								withCredentials: true,
 							});
