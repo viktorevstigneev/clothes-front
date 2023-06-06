@@ -79,6 +79,11 @@ const AdminPanel = () => {
 						))}
 					</select>
 
+					<label className="music__label" htmlFor="name">
+						<FormattedMessage id="admin__description__title_name" />
+					</label>
+					<input className="admin__text-input" type="text" name="name" id="name" />
+
 					<label className="music__label" htmlFor="decript">
 						<FormattedMessage id="admin__description__title" />
 					</label>

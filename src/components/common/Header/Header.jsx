@@ -86,6 +86,10 @@ const Header = ({ handleChange, currentLocale }) => {
 					<Link className="header__link" to="/clothes">
 						<FormattedMessage id="clothes_link" />
 					</Link>
+					{/* vintage_clothes@bk.ru JRuYiP31opt- */}
+					<Link className="header__link" to="/contact">
+						<FormattedMessage id="contact_link" />
+					</Link>
 					{/* <Link className="header__link" to="/main">
 						<FormattedMessage id="accessories_link" />
 					</Link>

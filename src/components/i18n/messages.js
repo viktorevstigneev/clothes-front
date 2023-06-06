@@ -2,9 +2,17 @@ import { LOCALES } from './locales';
 
 export const messages = {
 					[LOCALES.ENGLISH]: {
+						contact__title: 'Contact us',
+						contact__name: 'Fullname',
+						contact__email: 'EMAIL',
+						contact__subject: 'Subject',
+						contact__message: 'Message',
+						contact__submit: 'submit',
+
 						home_link: 'home',
 						admin_link: 'Admin',
 						clothes_link: 'Clothes',
+						contact_link: 'Contact',
 						accessories_link: 'Accessories',
 						bijouterie_link: 'Bijouterie',
 						shoes_link: 'Shoes',
@@ -54,6 +62,7 @@ export const messages = {
 						admin__type__title: 'CHOOSE CLOTHES TYPE',
 						admin__sex__title: 'CHOOSE SEX',
 						admin__description__title: 'ENTER DESCRIPTION',
+						admin__description__title_name: 'ENTER NAME',
 						admin__price__title: 'CHOOSE PRICE THING',
 						admin__add__btn: 'Add thing',
 						cart__title: 'shopping cart of ',
@@ -68,9 +77,17 @@ export const messages = {
 						edit_btn: 'Save',
 					},
 					[LOCALES.RUSSIAN]: {
+						contact__title: 'Связь с разработчиком',
+						contact__name: 'ФИО',
+						contact__email: 'E-mail',
+						contact__subject: 'Предмет',
+						contact__message: 'Сообщение',
+						contact__submit: 'отправить',
+
 						home_link: 'Главная',
 						admin_link: 'Администратор',
 						clothes_link: 'Одежда',
+						contact_link: 'Связь',
 						accessories_link: 'Аксессуары',
 						bijouterie_link: 'Бижутерия',
 						shoes_link: 'Обувь',
@@ -120,6 +137,7 @@ export const messages = {
 						admin__type__title: 'выберите тип одежды',
 						admin__sex__title: 'выберите половую принадленость',
 						admin__description__title: 'введите описание',
+						admin__description__title_name: 'введите название',
 						admin__price__title: 'введите цену',
 						admin__add__btn: 'Добавить вещь',
 						cart__title: 'Корзина пользователя',

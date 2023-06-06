@@ -1,5 +1,5 @@
 .contact{
-    background: linear-gradient(rgba(0, 0, 0, 0.356),rgba(0, 0, 0, 0.514)),url('../../../img/header_bg.png') 50% no-repeat;
+    background: linear-gradient(rgba(0, 0, 0, 0.356),rgba(0, 0, 0, 0.514));
 	background-size: cover;
 	height: 800px;
     border-top: 1px solid #000;
@@ -64,17 +64,16 @@
 
 
 .music__btn {
-	background: #d1a379;
+	background: #7c7c7c;
 	display: block;
-	padding: 15px 50px;
+	padding: 15px;
 	color: #fff;
-	font-size: 28px;
+	font-size:18px;
 	border: none;
-	box-shadow: 4px 8px 0px 0px rgba(122, 122, 122, 0.473);
 	transition: 1s;
 	cursor: pointer;
 }
 .music__btn:hover {
-	background: #b97d45;
+	background: #303030;
 }
 

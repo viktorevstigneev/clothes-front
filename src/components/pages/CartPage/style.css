@@ -1,6 +1,6 @@
 .cart {
 	margin-top: 70px;
-	padding-bottom: 170px;
+	padding-bottom: 370px;
 }
 
 .cart__container {
@@ -142,4 +142,9 @@
 	color: white;
 	font-size: 30px;
 	text-align: center;
+}
+
+.pay__info{
+	color: rgb(19, 150, 1);
+	font-size: 0.8rem;
 }

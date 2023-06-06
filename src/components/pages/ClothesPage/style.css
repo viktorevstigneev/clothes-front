@@ -7,11 +7,11 @@
 .Clothes__top {
 	width: 100%;
 	display: flex;
-	background: rgb(43, 42, 42);
+	background: rgb(255, 255, 255);
 	padding: 10px;
 }
 .clothes__title {
-	color: aliceblue;
+	color: rgb(0, 0, 0);
 	margin-left: 40%;
 }
 
@@ -31,12 +31,12 @@
 .clothes__card {
 	/* width: 200px; */
 	cursor: pointer;
-	background: rgb(53, 53, 53);
+	background: rgb(255, 255, 255);
 	position: relative;
 }
 
 .clothes__bottom {
-	background: rgb(53, 53, 53);
+	background: rgb(255, 255, 255);
 	margin: 0;
 	padding: 10px;
 	border-bottom-left-radius: 20px;
@@ -65,7 +65,7 @@
 }
 
 .clothes__price {
-	color: white;
+	color: rgb(0, 0, 0);
 }
 #my-slider {
 	color: rgb(0, 0, 0);
@@ -75,7 +75,7 @@
 	margin: 0 auto; */
 }
 .clothes__filter {
-	color: white;
+	color: rgb(0, 0, 0);
 	cursor: pointer;
 }
 

@@ -25,13 +25,16 @@ const ClothesPage = () => {
 	const [filter, setFilter] = useState({
 		maxPrice: 100,
 		minPrice: 0,
-		sex: ['Female', 'Male'],
-		type: ['Blouses', 'Shirts', 'Pants', 'Dresses', 'Skirts', 'Outerwear'],
+		// sex: ['Female', 'Male'],
+		// type: ['Blouses', 'Shirts', 'Pants', 'Dresses', 'Skirts', 'Outerwear'],
+		sex: [],
+		type: [],
 	});
 
 
 
 	const [cardPrice, setCardPrice] = useState(activeCard && activeCard?.price);
+	const [cardName, setCardName] = useState(activeCard && activeCard?.name);
 	const [cardDesc, setCardDesc] = useState(activeCard && activeCard?.description);
 	const [file, setFile] = useState('');
 
@@ -90,8 +93,13 @@ const ClothesPage = () => {
 	const filterArray = (arr) => {
 		let newArr = arr && arr.filter((item) => item.price > filter.minPrice && item.price < filter.maxPrice);
 
-		newArr = newArr.filter((item) => filter.type.includes(item.typeClothes));
-		newArr = newArr.filter((item) => filter.sex.includes(item.sexThing));
+		// newArr = newArr.filter((item) => filter.type.includes(item.typeClothes));
+		// newArr = newArr.filter((item) => filter.sex.includes(item.sexThing));
+
+		newArr = newArr.filter((item) => (filter.type.length == 0 ? item : filter.type.includes(item.typeClothes)));
+		
+		newArr = newArr.filter((item) => (filter.sex.length == 0 ? item : filter.sex.includes(item.sexThing)));
+
 
 		return newArr;
 	};
@@ -129,6 +137,7 @@ const ClothesPage = () => {
 										setActiveCard(item);
 										setCardPrice(item.price);
 										setCardDesc(item.description);
+										setCardName(item?.name);
 										setShowCard(true);
 									}}
 								>
@@ -202,6 +211,13 @@ const ClothesPage = () => {
 													type: Array.from(set),
 												});
 											}
+
+											if (filter.type.length == 0) {
+												setFilter({
+													...filter,
+													type: ['Blouses', 'Shirts', 'Pants', 'Dresses', 'Skirts', 'Outerwear'],
+												});
+											}
 										}}
 										type="checkbox"
 										id={id}
@@ -242,6 +258,12 @@ const ClothesPage = () => {
 													sex: Array.from(set),
 												});
 											}
+											if (filter.type.length == 0) {
+												setFilter({
+													...filter,
+													type: ['Female', 'Male'],
+												});
+											}
 										}}
 										type="checkbox"
 										id={id}
@@ -275,7 +297,10 @@ const ClothesPage = () => {
 						)}
 						<div className="open__container">
 							<img className="open__img" src={`${API_URL}/getImage/${activeCard.avatar}`} alt="" />
-							<p className="open__description"> {activeCard.description}</p>
+							<div className="">
+								<p className="open__description"> {activeCard?.name}</p>
+								<p className="open__description"> {activeCard?.description}</p>
+							</div>
 						</div>
 						<div className="open__bottom">
 							<p className="open__price">
@@ -306,7 +331,7 @@ const ClothesPage = () => {
 					<form
 						className="open__block"
 						encType="multipart/form-data"
-						method='POST'
+						method="POST"
 						onSubmit={async (evt) => {
 							evt.preventDefault();
 
@@ -339,16 +364,28 @@ const ClothesPage = () => {
 									onChange={(evt) => setFile(evt.target.files[0])}
 								/>
 							</div>
-							<textarea
-								className="open__description"
-								style={{ resize: 'none', width: '100%' }}
-								type="text"
-								name="description"
-								onChange={(evt) => {
-									setCardDesc(evt.target.value);
-								}}
-								value={cardDesc}
-							></textarea>
+							<div className="">
+								<input
+								
+									style={{marginBottom:"20px"}}
+									type="text"
+									name='name'
+									value={cardName}
+									onChange={(evt) => {
+										setCardName(evt.target.value);
+									}}
+								/>
+								<textarea
+									className="open__description"
+									style={{ resize: 'none', width: '100%' }}
+									type="text"
+									name="description"
+									onChange={(evt) => {
+										setCardDesc(evt.target.value);
+									}}
+									value={cardDesc}
+								></textarea>
+							</div>
 						</div>
 						<div className="open__bottom">
 							<p className="open__price">

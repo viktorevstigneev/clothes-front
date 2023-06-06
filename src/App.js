@@ -13,7 +13,7 @@ const ClothesPage = lazy(() => import('./components/pages/ClothesPage'));
 const ProfilePage = lazy(() => import('./components/pages/ProfilePage'));
 const AdminPage = lazy(() => import('./components/pages/AdminPanel'));
 const CartPage = lazy(() => import('./components/pages/CartPage'));
-// const ContactPage = lazy(() => import('./components/pages/ContactPage'));
+const ContactPage = lazy(() => import('./components/pages/ContactPage'));
 
 function App() {
 	const [currentLocale, setCurrentLocale] = useState(getInitialLocal());
@@ -39,8 +39,7 @@ function App() {
 						<Route path="/profile" element={<ProfilePage />} />
 						<Route path="/admin" element={<AdminPage />} />
 						<Route path="/cart" element={<CartPage />} />
-						{/*
-					<Route path="/contact" element={<ContactPage />} /> */}
+						<Route path="/contact" element={<ContactPage />} />
 					</Routes>
 					{/* <Navigate  to="/main" /> */}
 				</Suspense>
