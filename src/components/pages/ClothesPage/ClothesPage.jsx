@@ -31,7 +31,7 @@ const ClothesPage = () => {
 		type: [],
 	});
 
-
+	console.log('filter: ', filter);
 
 	const [cardPrice, setCardPrice] = useState(activeCard && activeCard?.price);
 	const [cardName, setCardName] = useState(activeCard && activeCard?.name);
@@ -93,13 +93,9 @@ const ClothesPage = () => {
 	const filterArray = (arr) => {
 		let newArr = arr && arr.filter((item) => item.price > filter.minPrice && item.price < filter.maxPrice);
 
-		// newArr = newArr.filter((item) => filter.type.includes(item.typeClothes));
-		// newArr = newArr.filter((item) => filter.sex.includes(item.sexThing));
-
 		newArr = newArr.filter((item) => (filter.type.length == 0 ? item : filter.type.includes(item.typeClothes)));
-		
-		newArr = newArr.filter((item) => (filter.sex.length == 0 ? item : filter.sex.includes(item.sexThing)));
 
+		newArr = newArr.filter((item) => (filter.sex.length == 0 ? item : filter.sex.includes(item.sexThing)));
 
 		return newArr;
 	};
@@ -109,6 +105,9 @@ const ClothesPage = () => {
 
 		setFilteredCards(filterArray(cardData));
 	};
+	console.log('cardData: ', cardData);
+
+	console.log('filteredCards: ', filteredCards);
 
 	return (
 		<>
@@ -212,12 +211,12 @@ const ClothesPage = () => {
 												});
 											}
 
-											if (filter.type.length == 0) {
-												setFilter({
-													...filter,
-													type: ['Blouses', 'Shirts', 'Pants', 'Dresses', 'Skirts', 'Outerwear'],
-												});
-											}
+											// if (filter.type.length == 0) {
+											// 	setFilter({
+											// 		...filter,
+											// 		type: ['Blouses', 'Shirts', 'Pants', 'Dresses', 'Skirts', 'Outerwear'],
+											// 	});
+											// }
 										}}
 										type="checkbox"
 										id={id}
@@ -258,12 +257,12 @@ const ClothesPage = () => {
 													sex: Array.from(set),
 												});
 											}
-											if (filter.type.length == 0) {
-												setFilter({
-													...filter,
-													type: ['Female', 'Male'],
-												});
-											}
+											// if (filter.type.length == 0) {
+											// 	setFilter({
+											// 		...filter,
+											// 		sex: ['Female', 'Male'],
+											// 	});
+											// }
 										}}
 										type="checkbox"
 										id={id}
@@ -366,10 +365,9 @@ const ClothesPage = () => {
 							</div>
 							<div className="">
 								<input
-								
-									style={{marginBottom:"20px"}}
+									style={{ marginBottom: '20px' }}
 									type="text"
-									name='name'
+									name="name"
 									value={cardName}
 									onChange={(evt) => {
 										setCardName(evt.target.value);

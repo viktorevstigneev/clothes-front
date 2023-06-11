@@ -62,6 +62,26 @@ const ProfilePage = () => {
 	const userOrder = cartData && cartData.filter((value) => user?.order && user?.order.includes(value._id));
 	console.log('userOrder: ', userOrder);
 
+	const [orderSt, setOrderSt] = useState({
+		part1: true,
+		part2: false,
+		part3: false,
+	});
+
+	const checkStatus = (orderSt) => {
+		console.log('orderSt: ', orderSt);
+		if (orderSt == 1) return 'заказ принят';
+		if (orderSt ==  2) return 'Начата комплектовка';
+		// if (orderSt == 3) return 'заказ готов';
+	};
+
+
+	function randomInteger(min, max) {
+		// случайное число от min до (max+1)
+		let rand = min + Math.random() * (max + 1 - min);
+		return Math.floor(rand);
+	}
+
 	return (
 		<>
 			<main className="profile">
@@ -91,11 +111,11 @@ const ProfilePage = () => {
 					{userOrder ? (
 						userOrder.map((order) => (
 							<div className="bottom__order">
-								<div style={{display: "flex", alignItems: "center"}}>
+								<div style={{ display: 'flex', alignItems: 'center' }}>
 									<p className="bottom__order-name">{order?.typeClothes}</p>
 									<img width={50} src={`${API_URL}/getImage/${order?.avatar}`} alt="pict" />
 								</div>
-								<p className="bottom__order-name">is proceed</p>
+								<p className="bottom__order-name">{checkStatus(randomInteger(1,2))}</p>
 							</div>
 						))
 					) : (

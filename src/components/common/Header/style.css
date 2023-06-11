@@ -77,12 +77,13 @@
 
 /* ------------------------ */
 .auth__image {
+	width: 60px;
 	display: block;
 	margin: 0 auto;
 }
 .auth__wrapper {
 	display: flex;
-	margin-top: 30px;
+	margin-top: 10px;
 }
 
 .auth__preinput {
@@ -91,9 +92,9 @@
 	border: 1px solid black;
 	border-top-left-radius: 25px;
 	border-bottom-left-radius: 25px;
-	padding: 5px 30px;
+	padding: 5px 10px;
 	font-family: Pompiere;
-	font-size: 30px;
+	font-size: 10px;
 }
 .auth__input {
 	width: 100%;
@@ -106,13 +107,13 @@
 
 .auth__input::placeholder {
 	font-family: Pompiere;
-	font-size: 30px;
+	font-size: 10px;
 }
 
 .auth__button {
-	padding: 10px 20px;
+	padding: 10px ;
 	font-family: Pompiere;
-	font-size: 30px;
+	font-size: 15px;
 	background: rgba(0, 0, 0, 0.767);
 	border: none;
 	border-radius: 25px;
@@ -126,7 +127,7 @@
 
 .auth__next {
 	font-family: Pompiere;
-	font-size: 30px;
+	font-size: 20px;
 
 	cursor: pointer;
 }
